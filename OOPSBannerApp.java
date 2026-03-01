@@ -1,31 +1,14 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class OOPSBannerApp {
 
-    /* ---------- INNER STATIC CLASS ---------- */
-    static class CharacterPattern {
+    /* ---------- BUILD MAP ---------- */
+    public static Map<Character, String[]> buildCharacterMap() {
 
-        private char character;
-        private String[] pattern;
+        Map<Character, String[]> map = new HashMap<>();
 
-        // Constructor
-        public CharacterPattern(char character, String[] pattern) {
-            this.character = character;
-            this.pattern = pattern;
-        }
-
-        // Getter methods
-        public char getCharacter() {
-            return character;
-        }
-
-        public String[] getPattern() {
-            return pattern;
-        }
-    }
-
-    /* ---------- PATTERN METHODS ---------- */
-
-    public static String[] createOPattern() {
-        return new String[]{
+        map.put('O', new String[]{
                 " ***** ",
                 "*     *",
                 "*     *",
@@ -33,11 +16,9 @@ public class OOPSBannerApp {
                 "*     *",
                 "*     *",
                 " ***** "
-        };
-    }
+        });
 
-    public static String[] createPPattern() {
-        return new String[]{
+        map.put('P', new String[]{
                 " ***** ",
                 "*     *",
                 "*     *",
@@ -45,11 +26,9 @@ public class OOPSBannerApp {
                 "*      ",
                 "*      ",
                 "*      "
-        };
-    }
+        });
 
-    public static String[] createSPattern() {
-        return new String[]{
+        map.put('S', new String[]{
                 " ***** ",
                 "*      ",
                 "*      ",
@@ -57,33 +36,33 @@ public class OOPSBannerApp {
                 "      *",
                 "      *",
                 " ***** "
-        };
+        });
+
+        return map;
     }
 
-    /* ---------- MAIN METHOD ---------- */
+    /* ---------- RENDER FUNCTION ---------- */
+    public static void renderBanner(String word,
+                                    Map<Character,String[]> map) {
 
-    public static void main(String[] args) {
-
-        CharacterPattern O =
-                new CharacterPattern('O', createOPattern());
-
-        CharacterPattern P =
-                new CharacterPattern('P', createPPattern());
-
-        CharacterPattern S =
-                new CharacterPattern('S', createSPattern());
-
-        CharacterPattern[] word = {O, O, P, S};
-
-        for(int i = 0; i < 7; i++) {
+        for(int row = 0; row < 7; row++) {
 
             StringBuilder line = new StringBuilder();
 
-            for(CharacterPattern cp : word) {
-                line.append(cp.getPattern()[i]).append(" ");
+            for(char ch : word.toCharArray()) {
+                line.append(map.get(ch)[row]).append(" ");
             }
 
             System.out.println(line);
         }
+    }
+
+    /* ---------- MAIN ---------- */
+    public static void main(String[] args) {
+
+        Map<Character,String[]> characterMap =
+                buildCharacterMap();
+
+        renderBanner("OOPS", characterMap);
     }
 }
